@@ -1,6 +1,11 @@
 var express = require('express');
 var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
 var router = express.Router();
+
+var gradeSchema = new Schema({name: String}, {collection: 'grades'});
+
+mongoose.model('grades', gradeSchema);
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
