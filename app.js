@@ -6,9 +6,11 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var errorhandler = require('errorhandler');
 var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
 
 var index = require('./routes/index');
 var users = require('./routes/users');
+var posts = require('./routes/posts');
 
 var app = express();
 
@@ -29,10 +31,15 @@ if ('development' == app.get('env')) {
     mongoose.connect('mongodb://localhost/school');
 }
 
+var gradeSchema = new Schema({name: String}, {collection: 'grades'});
+var fooSchema = new Schema({content: String}, {collection: 'foo'});
+
 mongoose.model('grades', { name: String });
+mongoose.model('foo', fooSchema);
 
 app.use('/', index);
 app.use('/users', users);
+app.use('/posts', posts);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
